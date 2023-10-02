@@ -1,0 +1,51 @@
+name: "modelEnsemble"
+platform: "ensemble"
+max_batch_size : 0
+input [
+  {
+    name: "INPUT__0"
+    data_type: TYPE_FP32
+    dims: [ 2 ]
+  }
+]
+output [
+  {
+    name: "OUTPUT__model1__0"
+    data_type: TYPE_INT64
+    dims: [ -1, 10 ]
+  },
+  {
+    name: "OUTPUT__model2__0"
+    data_type: TYPE_INT64
+    dims: [ -1, 10 ]
+  }
+]
+
+ensemble_scheduling {
+  step [
+    {
+      model_name: "model1",
+      model_version: -1
+      input_map {
+        key: "INPUT__0"
+        value: "INPUT__0"
+      }
+      output_map {
+        key: "OUTPUT__0",
+        value: "OUTPUT__model1__0"
+      }
+    },
+    {
+      model_name: "model2",
+      model_version: -1
+      input_map {
+        key: "INPUT__0"
+        value: "INPUT__0"
+      }
+      output_map {
+        key: "OUTPUT__0",
+        value: "OUTPUT__model2__0"
+      }
+    }
+  ]
+}
